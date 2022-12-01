@@ -5,18 +5,7 @@ def load_data(file: str) -> str:
 
 
 def parse_data(content: str) -> list:
-    lines = content.splitlines()
-    calories = []
-    current_elve = 0
-    while lines:
-        line = lines.pop()
-        if line:
-            current_elve += int(line)
-        else:
-            calories.append(current_elve)
-            current_elve = 0
-
-    calories.append(current_elve)
+    calories = [sum(map(int, elf.splitlines())) for elf in content.split("\n\n")]
     return calories
   
 
@@ -41,3 +30,4 @@ print("Task1:", max_)
 # %%
 top_three, sum_ = task2("input.txt")
 print("Task2:", sum_)
+# %%
