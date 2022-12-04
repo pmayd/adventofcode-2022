@@ -45,12 +45,10 @@ def task2(file: str):
     return sum(PRIORITIES.get(find_batch_item(group), 0) for group in zip(*groups))
 
 
-#%%
-sum_ = task1("input.txt")
-print("Task1:", sum_)
+if __name__ == "__main__":
+    sum_ = task1("input.txt")
+    print("Task1:", sum_)
 
-
-# %%
-sum_ = task2("input.txt")
-print("Task2:", sum_)
-# %%
+    sum_ = task2("input.txt")
+    print("Task2:", sum_)
+    # %%
