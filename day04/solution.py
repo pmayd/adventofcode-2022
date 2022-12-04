@@ -5,18 +5,22 @@ def load_data(file: str) -> str:
 
 
 def str2range(section: str) -> set:
+    assert "-" in section
     start, end = map(int, section.split("-"))
+    assert end >= start
     return set(range(start, end + 1))
 
 
 def parse_data(content: str) -> list[list[str, str]]:
     # return assignment pairs
+    assert "," in content
     return [map(str2range, l.split(",")) for l in content.splitlines()]
 
 
 def fully_contains(pair: list[set, set]) -> bool:
     # see: https://realpython.com/python-sets/#available-operators-and-methods
     set_one, set_two = pair
+    assert set_one and set_two
     return set_one <= set_two or set_two <= set_one
 
 
@@ -29,6 +33,7 @@ def task1(file: str):
 ### PART II
 def overlap(pair: list[set, set]) -> bool:
     set_one, set_two = pair
+    assert set_one and set_two
     return bool(set_one & set_two)
     
 def task2(file: str):
