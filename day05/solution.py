@@ -3,7 +3,6 @@ from collections import defaultdict
 import re
 import copy
 import logging
-from operator import itemgetter
 
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -16,20 +15,17 @@ def parse_data(content: str) -> tuple[dict[int, list[str]], list[tuple[int]]]:
     # return assignment pairs
     assert content.count("\n\n") == 1
     
-    configuration, steps = content.split("\n\n")
+    configuration, steps = map(str.splitlines, content.split("\n\n"))
 
     # process configuration
     stacks = defaultdict(list)
-    no_stacks = int(re.findall(r"\s\d+", configuration.splitlines()[-1])[-1])
-
-    for line in configuration.splitlines():
-        for stack in range(1, no_stacks + 1):
-            crate, line = line[:3], line[4:]
-            if "[" in crate:
-                stacks[stack].insert(0, crate.strip("[]"))
+    for line in configuration:
+        for stack, crate in enumerate(line[1::4], start=1):
+            if crate.isalpha():
+                stacks[stack].insert(0, crate)
 
     # process steps
-    steps = [tuple(map(int, re.findall(r"\s\d+", step))) for step in steps.splitlines()]
+    steps = [tuple(map(int, step.split()[1::2])) for step in steps]
 
     logging.debug(f"{stacks=}")
     logging.debug(f"{steps=}")
